@@ -2,6 +2,10 @@ import express, {Express, Response, Request, ErrorRequestHandler, NextFunction }
 import HttpExceptionHandler from "./HttpExceptionHandler";
 import { engine } from "express-handlebars";
 import path from "path";
+import { StatusCodes } from "http-status-codes";
+import { getFortune } from "./Fortunes";
+
+
 const PORT = process.env.PORT || 8000;
 
 const app: Express = express();
@@ -31,34 +35,24 @@ app.use(express.static(path.join(__dirname,"../public/")))
 //End of adding static files
 
 
-const fortunes: string[] = [
-    "Conquer your fears or they will conquer you",
-    "Rivers and sprins",
-    "Don't fear what you do no know",
-    "You will have a pleasant surprise",
-    "Whenever possible, keep it super simple"
-];
-
-
 app.get("/",(req: Request, res: Response)=>{
     res.render("home");
 });
 
 app.get("/about",(req: Request,res: Response)=>{
-    const randomFortune = fortunes[ Math.floor(Math.random()* fortunes.length)];
-    res.render("about", {fortune: randomFortune});
+    res.render("about", {fortune: getFortune});
 });
 
 //creating custom 404 page
 app.use((req: Request, res: Response)=>{
-    res.status(404);
+    res.status(StatusCodes.NOT_FOUND);
     res.render("404");
 })
 
 //custom 500 page
 app.use((err: HttpExceptionHandler,req: Request, res: Response,next: NextFunction)=>{
     console.error(err.message);
-    res.status(500);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
     res.render("500");
 })
 

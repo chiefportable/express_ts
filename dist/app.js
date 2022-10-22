@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_handlebars_1 = require("express-handlebars");
 const path_1 = __importDefault(require("path"));
+const http_status_codes_1 = require("http-status-codes");
+const Fortunes_1 = __importDefault(require("./Fortunes"));
 const PORT = process.env.PORT || 8000;
 const app = (0, express_1.default)();
 /**
@@ -25,29 +27,21 @@ app.set("views", path_1.default.join(__dirname, "../views"));
  */
 app.use(express_1.default.static(path_1.default.join(__dirname, "../public/")));
 //End of adding static files
-const fortunes = [
-    "Conquer your fears or they will conquer you",
-    "Rivers and sprins",
-    "Don't fear what you do no know",
-    "You will have a pleasant surprise",
-    "Whenever possible, keep it super simple"
-];
 app.get("/", (req, res) => {
     res.render("home");
 });
 app.get("/about", (req, res) => {
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render("about", { fortune: randomFortune });
+    res.render("about", { fortune: Fortunes_1.default });
 });
 //creating custom 404 page
 app.use((req, res) => {
-    res.status(404);
+    res.status(http_status_codes_1.StatusCodes.NOT_FOUND);
     res.render("404");
 });
 //custom 500 page
 app.use((err, req, res, next) => {
     console.error(err.message);
-    res.status(500);
+    res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR);
     res.render("500");
 });
 app.listen(PORT, () => {
