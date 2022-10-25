@@ -19,6 +19,7 @@ const app = (0, express_1.default)();
  */
 app.engine("handlebars", (0, express_handlebars_1.engine)({
     defaultLayout: "main",
+    extname: "handlebars"
 }));
 app.set("view engine", "handlebars");
 app.set("views", path_1.default.join(__dirname, "../views"));
@@ -29,7 +30,9 @@ app.set("views", path_1.default.join(__dirname, "../views"));
  * Adding static files to
  */
 app.use(express_1.default.static(path_1.default.join(__dirname, "../public/")));
-//End of adding static files
+/**
+ * http route
+ */
 app.get("/", Handlers_1.home);
 app.get("/about", Handlers_1.about);
 /**

@@ -19,6 +19,7 @@ const app: Express = express();
 
 app.engine("handlebars",engine({
     defaultLayout: "main",
+    extname: "handlebars"
     })
 );
 
@@ -34,13 +35,14 @@ app.set("views", path.join(__dirname, "../views"));
  */
 app.use(express.static(path.join(__dirname, "../public/")));
 
-//End of adding static files
-
-
-
+/**
+ * http route
+ */
 app.get("/", home);
 
 app.get("/about",about);
+
+
 
 
 /**
@@ -49,6 +51,7 @@ app.get("/about",about);
  * pages for our application
  * 
  * */
+
 app.use(notFound);
 
 app.use(internalError);

@@ -24,4 +24,5 @@ const internalError = (err: HttpExceptionHandler,req: Request, res: Response, ne
     return res.render("500");
 }
 
+
 export {home, about, notFound, internalError};
