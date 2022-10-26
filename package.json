@@ -9,7 +9,7 @@
     "start": "node dist/app.js",
     "preserve": "npm run build",
     "serve": "npx tsc -w & nodemon dist/app.js",
-    "pretest": "npm run build",
+    "pretest":"npm run build",
     "test": "jest dist/__test__/handlers.test.js"
   },
   "keywords": [],

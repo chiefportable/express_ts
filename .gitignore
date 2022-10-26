@@ -3,5 +3,4 @@ node_modules
 
 
 #exclude test from git
-src/__test__
 dist/__test__

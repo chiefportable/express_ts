@@ -3,7 +3,7 @@
  * Date: 24th October, 2022
  */
 
-import express, { Express} from "express";
+import express, { Express, Request, Response} from "express";
 import { engine } from "express-handlebars";
 import path from "path";
 import { home, about, notFound, internalError } from "./Handlers";
@@ -53,7 +53,6 @@ app.get("/about",about);
  * */
 
 app.use(notFound);
-
 app.use(internalError);
 
 app.listen(PORT, ()=>{
