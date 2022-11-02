@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_handlebars_1 = require("express-handlebars");
 const path_1 = __importDefault(require("path"));
-const Handlers_1 = require("./Handlers");
+const Handlers_js_1 = require("./Handlers.js");
 const PORT = process.env.PORT || 8000;
 const app = (0, express_1.default)();
 /**
@@ -33,16 +33,17 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "../public/")));
 /**
  * http route
  */
-app.get("/", Handlers_1.home);
-app.get("/about", Handlers_1.about);
+app.get("/", Handlers_js_1.home);
+app.get("/about", Handlers_js_1.about);
+app.get("/headers", Handlers_js_1.headers);
 /**
  *
  * creating custome errror
  * pages for our application
  *
  * */
-app.use(Handlers_1.notFound);
-app.use(Handlers_1.internalError);
+app.use(Handlers_js_1.notFound);
+app.use(Handlers_js_1.internalError);
 app.listen(PORT, () => {
-    console.log(`server is running on http://localhost:${PORT}\npress Ctrl + C to stop server`);
+    console.log(`server is running on http://localhost:${PORT}\npress Ctrl + C to terminate server`);
 });
