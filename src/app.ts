@@ -1,10 +1,17 @@
-import express, {Express, Response, Request, ErrorRequestHandler, NextFunction } from "express";
-import HttpExceptionHandler from "./HttpExceptionHandler";
+/**
+ * Author: Kwame Ato
+ * Date: 24th October, 2022
+ */
+
+import express, { Express, Request, response, Response} from "express";
 import { engine } from "express-handlebars";
 import path from "path";
+import { home, about, notFound, internalError, headers } from "./Handlers.js";
+
 const PORT = process.env.PORT || 8000;
 
 const app: Express = express();
+
 
 /**
  * configure handlebars view engine
@@ -13,10 +20,12 @@ const app: Express = express();
 
 app.engine("handlebars",engine({
     defaultLayout: "main",
-}))
+    extname: "handlebars"
+    })
+);
 
-app.set("view engine","handlebars");
-app.set("views", path.join(__dirname,"../views"));
+app.set("view engine", "handlebars");
+app.set("views", path.join(__dirname, "../views"));
 
 /**
  * end of engine configuration
@@ -24,45 +33,32 @@ app.set("views", path.join(__dirname,"../views"));
 
 
 /**
- * Adding static files to 
+ * Adding static files to
  */
-app.use(express.static(path.join(__dirname,"../public/")))
-
-//End of adding static files
+app.use(express.static(path.join(__dirname, "../public/")));
 
 
-const fortunes: string[] = [
-    "Conquer your fears or they will conquer you",
-    "Rivers and sprins",
-    "Don't fear what you do no know",
-    "You will have a pleasant surprise",
-    "Whenever possible, keep it super simple"
-];
+/**
+ * http route
+ */
+app.get("/", home);
+
+app.get("/about",about);
+
+app.get("/headers",headers);
 
 
-app.get("/",(req: Request, res: Response)=>{
-    res.render("home");
-});
 
-app.get("/about",(req: Request,res: Response)=>{
-    const randomFortune = fortunes[ Math.floor(Math.random()* fortunes.length)];
-    res.render("about", {fortune: randomFortune});
-});
+/**
+ * 
+ * creating custome errror
+ * pages for our application
+ * 
+ * */
 
-//creating custom 404 page
-app.use((req: Request, res: Response)=>{
-    res.status(404);
-    res.render("404");
-})
+app.use(notFound);
+app.use(internalError);
 
-//custom 500 page
-app.use((err: HttpExceptionHandler,req: Request, res: Response,next: NextFunction)=>{
-    console.error(err.message);
-    res.status(500);
-    res.render("500");
-})
-
-app.listen(PORT,()=>{
-    console.log(`Express started on http://localhost:${PORT} \n`+
-    `press Ctrl + C to terminate`);
+app.listen(PORT, ()=>{
+    console.log(`server is running on http://localhost:${PORT}\npress Ctrl + C to terminate server`);
 })

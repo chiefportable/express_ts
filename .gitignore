@@ -1,2 +1,6 @@
 #ignore packages installed by npm
 node_modules
+
+
+#exclude test from git
+dist/__test__
