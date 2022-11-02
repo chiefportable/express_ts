@@ -4,3 +4,6 @@ node_modules
 
 #exclude test from git
 dist/__test__
+
+#ignore jest coverage
+coverage
