@@ -4,25 +4,25 @@
  */
 
 import express, { Express, Request, response, Response} from "express";
-import { engine } from "express-handlebars";
+import { engine, create } from "express-handlebars";
 import path from "path";
-import { home, about, notFound, internalError, headers } from "./Handlers.js";
+import { home, about, notFound, internalError } from "./Handlers.js";
 
 const PORT = process.env.PORT || 8000;
 
 const app: Express = express();
 
+const hbs = create({
+    defaultLayout: "main",
+    extname: ".hbs"
+})
 
 /**
  * configure handlebars view engine
  * *********************************
  */
 
-app.engine("handlebars",engine({
-    defaultLayout: "main",
-    extname: "handlebars"
-    })
-);
+app.engine("handlebars", hbs.engine);
 
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "../views"));
@@ -44,9 +44,6 @@ app.use(express.static(path.join(__dirname, "../public/")));
 app.get("/", home);
 
 app.get("/about",about);
-
-app.get("/headers",headers);
-
 
 
 /**

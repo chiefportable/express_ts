@@ -13,14 +13,15 @@ const path_1 = __importDefault(require("path"));
 const Handlers_js_1 = require("./Handlers.js");
 const PORT = process.env.PORT || 8000;
 const app = (0, express_1.default)();
+const hbs = (0, express_handlebars_1.create)({
+    defaultLayout: "main",
+    extname: ".hbs"
+});
 /**
  * configure handlebars view engine
  * *********************************
  */
-app.engine("handlebars", (0, express_handlebars_1.engine)({
-    defaultLayout: "main",
-    extname: "handlebars"
-}));
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", path_1.default.join(__dirname, "../views"));
 /**
@@ -35,7 +36,6 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "../public/")));
  */
 app.get("/", Handlers_js_1.home);
 app.get("/about", Handlers_js_1.about);
-app.get("/headers", Handlers_js_1.headers);
 /**
  *
  * creating custome errror

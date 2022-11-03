@@ -2,11 +2,40 @@ import { Request, Response, NextFunction } from "express";
 import getFortune from "./Fortunes.js";
 import HttpExceptionHandler from "./HttpExceptionHandler.js";
 
+interface ObjectInterface{
+    currency:{
+        name: string;
+        abbrev: string;
+    },
+    tours: [
+        {name: string, price: string},
+        {name: string, price: string}
+    ],
+    specialsUrl: string,
+    currencies: string[]
+}
+
+const myobject: ObjectInterface = {
+    currency: {
+        name: "United State Dollars",
+        abbrev: "USD",
+    },
+
+    tours: [
+        {name: "Hood River", price: '$99.95'},
+        {name: "Oregon Coast", price: "$159.95"}
+    ],
+
+    specialsUrl: "/january-spacials",
+    currencies: ["USD","GBP","BTC"],
+}
+
+// const myobject = {
+//     message: "Welcome to my homepage"
+// }
+
 const home = (req: Request, res: Response) =>{
-    res.render("home",{
-        message: "Hello Esteem programmer",
-        name: req.query.name,
-    });
+    res.render("home",myobject);
 }
 
 const about = (req: Request, res: Response)=>{
@@ -25,17 +54,6 @@ const internalError = (err: HttpExceptionHandler,req: Request, res: Response, ne
     res.render("500");
 }
 
-const headers = (req: Request, res: Response)=>{
-    
-    res.type("text/plain");
-    const headers = Object.entries(req.headers);
-    headers.map(([key, value])=>{
-        return `${key}: ${value}`
-    })
-
-    res.send(headers.join('\n'))
-}
 
 
-
-export {home, about, notFound, internalError, headers};
+export {home, about, notFound, internalError};
