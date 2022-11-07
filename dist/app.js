@@ -17,10 +17,11 @@ const app = (0, express_1.default)();
  * configure handlebars view engine
  * *********************************
  */
-app.engine("handlebars", (0, express_handlebars_1.engine)({
+const hbs = (0, express_handlebars_1.create)({
     defaultLayout: "main",
-    extname: "handlebars"
-}));
+    extname: ".hbs"
+});
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", path_1.default.join(__dirname, "../views"));
 /**

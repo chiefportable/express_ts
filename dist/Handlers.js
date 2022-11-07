@@ -7,8 +7,7 @@ exports.headers = exports.internalError = exports.notFound = exports.about = exp
 const Fortunes_js_1 = __importDefault(require("./Fortunes.js"));
 const home = (req, res) => {
     res.render("home", {
-        message: "Hello Esteem programmer",
-        age: 16
+        message: "Hello Esteem programmer"
     });
 };
 exports.home = home;

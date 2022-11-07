@@ -4,7 +4,7 @@
  */
 
 import express, { Express, Request, response, Response} from "express";
-import { engine } from "express-handlebars";
+import { create } from "express-handlebars";
 import path from "path";
 import { home, about, notFound, internalError, headers } from "./Handlers.js";
 
@@ -17,12 +17,12 @@ const app: Express = express();
  * configure handlebars view engine
  * *********************************
  */
-
-app.engine("handlebars",engine({
+const hbs = create({
     defaultLayout: "main",
-    extname: "handlebars"
-    })
-);
+    extname: ".hbs"
+})
+
+app.engine("handlebars",hbs.engine)
 
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "../views"));
