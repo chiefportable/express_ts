@@ -8,7 +8,7 @@ const Fortunes_js_1 = __importDefault(require("./Fortunes.js"));
 const home = (req, res) => {
     res.render("home", {
         message: "Hello Esteem programmer",
-        name: req.query.name,
+        age: 16
     });
 };
 exports.home = home;

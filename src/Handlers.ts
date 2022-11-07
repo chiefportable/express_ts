@@ -5,7 +5,7 @@ import HttpExceptionHandler from "./HttpExceptionHandler.js";
 const home = (req: Request, res: Response) =>{
     res.render("home",{
         message: "Hello Esteem programmer",
-        name: req.query.name,
+        age: 16
     });
 }
 
